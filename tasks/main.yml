@@ -1,0 +1,35 @@
+---
+- name: remmina role
+  tags:
+    - remmina
+  block:
+
+  # assert
+  - name: Assertions
+    ansible.builtin.assert:
+      that:
+        - remmina_user != None
+
+  # flatpak
+  - when: remmina_flatpak_state != None
+    block:
+
+    # flatpak
+    - name: Flatpak {{ remmina_flatpak_name }} -> {{ remmina_flatpak_state }}
+      become: true
+      community.general.flatpak:
+        name: "{{ remmina_flatpak_name }}"
+        method: "{{ remmina_flatpak_scope }}" 
+        state: "{{ remmina_flatpak_state }}"
+
+  # copy connection profiles
+  - when: remmina_profiles | length > 0
+    name: Copy {{ remmina_profiles }} to {{ remmina_profiles_flatpak_dst }}
+    become: true
+    loop: "{{ remmina_profiles }}"
+    ansible.builtin.copy:
+      src: "{{ item }}"
+      dest: "{{ remmina_profiles_flatpak_dst }}/"
+      owner: "{{ remmina_user }}"
+      group: "{{ remmina_user }}"
+      mode: "u=rw,g=,o="

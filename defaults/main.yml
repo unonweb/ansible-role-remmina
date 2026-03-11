@@ -1,0 +1,7 @@
+---
+remmina_user:
+remmina_flatpak_state: present
+remmina_flatpak_scope: system
+remmina_flatpak_name: org.remmina.Remmina
+remmina_profiles: []
+remmina_profiles_flatpak_dst: "/home/{{ remmina_user }}/.var/app/org.remmina.Remmina/data/remmina"
