@@ -1,0 +1,21 @@
+---
+- tags: [role-remmina-profiles]
+  when: remmina_profiles | length > 0
+  block:
+
+  # assert
+  - name: Assertions for remmina-profiles
+    ansible.builtin.assert:
+      that:
+      - remmina_user != None
+
+  # copy connection profiles
+  - name: Copy {{ remmina_profiles }} to {{ __remmina_profiles_flatpak_dst }}
+    become: true
+    loop: "{{ remmina_profiles }}"
+    ansible.builtin.copy:
+      src: "{{ item }}"
+      dest: "{{ __remmina_profiles_flatpak_dst }}/"
+      owner: "{{ remmina_user }}"
+      group: "{{ remmina_user }}"
+      mode: "u=rw,g=,o="

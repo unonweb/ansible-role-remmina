@@ -1,0 +1,3 @@
+---
+__remmina_profiles_flatpak_dst: "/home/{{ remmina_user }}/.var/app/org.remmina.Remmina/data/remmina"
+__remmina_flatpak_name: org.remmina.Remmina

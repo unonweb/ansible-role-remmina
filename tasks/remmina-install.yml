@@ -1,0 +1,11 @@
+---
+- tags: [role-remmina-install]
+  block:
+
+  # flatpak
+  - name: Flatpak {{ __remmina_flatpak_name }} -> {{ remmina_flatpak_state }}
+    become: true
+    community.general.flatpak:
+      name: "{{ __remmina_flatpak_name }}"
+      method: "{{ remmina_flatpak_scope }}" 
+      state: "{{ remmina_flatpak_state }}"
